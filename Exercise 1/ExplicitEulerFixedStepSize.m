@@ -13,7 +13,7 @@ X(:,1) = x0;
 for k=1:N
     [f,J] = feval(funJac,T(:,k),X(:,k),varargin{:});
     T(:,k+1) = T(:,k) + dt;
-    X(:,k+1) = X(:,k) + J*dt;
+    X(:,k+1) = X(:,k) + f*dt;
 end 
 
 % Return a good form for result 

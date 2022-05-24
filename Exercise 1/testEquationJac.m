@@ -1,6 +1,7 @@
 function [f,J] = testEquationJac(t,x,varargin)
 % The test function
-f = exp(-t);
+%f = exp(-t);
+f = -x;
 % The Jaccobian
-J = -exp(-t);
+J = x;
 end
