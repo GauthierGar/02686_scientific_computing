@@ -1,4 +1,4 @@
-function [T,X,info] = ClassicalRungeKuttaAdaptativeStep(fun,t0,tf,x0,N,abstol,reltol,varargin)
+function [T,X,info] = ClassicalRungeKuttaAdaptativeStep(func,t0,tf,x0,N,abstol,reltol,varargin)
 
     %Error controller parameters
     epstol = 0.8;   % target
@@ -27,21 +27,20 @@ function [T,X,info] = ClassicalRungeKuttaAdaptativeStep(fun,t0,tf,x0,N,abstol,re
         if (t+h>tf)
             h = tf-t;
         end
-        f = feval(fun,t,x,varargin{:});
+        f = feval(func,t,x,varargin{:});
         nfun = nfun+1;
 
         AcceptStep = false;
         while ~AcceptStep
             %Take step of size h
-            x1 = x+ h*f;
+            [t1,x1] = ClassicalRungeKuttaStep(func,t,x,h,varargin{:});
 
             %Take step of size h/2
             hm = 0.5*h;
-            tm = t+hm;
-            xm = x+hm*f;
-            fm = feval(fun,tm,xm,varargin{:});
+            [tm,xm] = ClassicalRungeKuttaStep(func,t,x,hm,varargin{:});
+            fm = feval(func,tm,xm,varargin{:});
             nfun = nfun+1;
-            x1hat = xm +hm*fm;
+            [t1hat,x1hat] = ClassicalRungeKuttaStep(func,tm,xm,hm,varargin{:});
 
             %Error estimation
             e = x1hat-x1;
@@ -64,7 +63,6 @@ function [T,X,info] = ClassicalRungeKuttaAdaptativeStep(fun,t0,tf,x0,N,abstol,re
             rvec(end+1) = r;
             %asymptotic step size controller
             h = max(facmin,min(sqrt(epstol/r),facmax))*h;
-
         end
     end
 

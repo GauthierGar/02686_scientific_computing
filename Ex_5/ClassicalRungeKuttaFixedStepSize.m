@@ -11,7 +11,7 @@ T(:,1) = t0;
 X(:,1) = x0;
 
 for k=1:N
-    [t,x] = ClassicalRungeKuttaStep(funJac,T(:,k),X(:,k),dt,varargin);
+    [t,x] = ClassicalRungeKuttaStep(funJac,T(:,k),X(:,k),dt,varargin{:});
     T(:,k+1) = t;
     X(:,k+1) = x;
 end
