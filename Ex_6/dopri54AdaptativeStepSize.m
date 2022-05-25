@@ -1,6 +1,6 @@
-function [T,X,info] = ClassicalRungeKuttaAdaptativeStep(func,t0,tf,x0,N,abstol,reltol,varargin)
-
-    %Error controller parameters
+function [T,X,info] = dopri54AdaptativeStepSize(func,t0,tf,x0,N,abstol,reltol,varargin)
+    
+%Error controller parameters
     epstol = 0.8;   % target
     facmin = 0.1;   % maximum decrease factor
     facmax = 5.0;   % maximum increase factor
@@ -31,12 +31,15 @@ function [T,X,info] = ClassicalRungeKuttaAdaptativeStep(func,t0,tf,x0,N,abstol,r
         AcceptStep = false;
         while ~AcceptStep
             %Take step of size h
-            [~,x1] = ClassicalRungeKuttaStep(func,t,x,h,varargin{:});
+            [~,x1] = dopri54Step(func,t,x,h,varargin{:});
+            nfun = nfun + 7;
 
             %Take step of size h/2
             hm = 0.5*h;
-            [tm,xm] = ClassicalRungeKuttaStep(func,t,x,hm,varargin{:});
-            [~,x1hat] = ClassicalRungeKuttaStep(func,tm,xm,hm,varargin{:});
+            [tm,xm] = dopri54Step(func,t,x,hm,varargin{:});
+            nfun = nfun + 7;
+            [~,x1hat] = dopri54Step(func,tm,xm,hm,varargin{:});
+            nfun = nfun + 7;
 
             %Error estimation
             e = x1hat-x1;
