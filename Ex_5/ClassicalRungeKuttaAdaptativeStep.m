@@ -27,7 +27,7 @@ function [T,X,info] = ClassicalRungeKuttaAdaptativeStep(func,t0,tf,x0,N,abstol,r
         if (t+h>tf)
             h = tf-t;
         end
-
+        
         AcceptStep = false;
         while ~AcceptStep
             %Take step of size h
