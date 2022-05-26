@@ -1,4 +1,4 @@
-function [T,X,G,info,stats] = ESDIRK23(fun,jac,t0,tf,x0,h0,absTol,relTol,varargin)
+function [Tout,Xout,Gout,info,stats] = ESDIRK23(fun,jac,t0,tf,x0,h0,absTol,relTol,varargin)
 
     % Setup the variable for ESDIRK23 
     gamma = 1-1/sqrt(2);
@@ -152,6 +152,7 @@ function [T,X,G,info,stats] = ESDIRK23(fun,jac,t0,tf,x0,h0,absTol,relTol,varargi
         stats.AcceptStep(nstep) = false;
         stats.SlowConv(nstep)  = SlowConvergence*i; % carsten, recording which stage is converging to slow (reaching maximum no. of iterations)
         iter(:) = 0; % carsten
+        
         %=====================================================================
         % Error and Convergence Controller
         if Converged
@@ -278,6 +279,7 @@ function [T,X,G,info,stats] = ESDIRK23(fun,jac,t0,tf,x0,h0,absTol,relTol,varargi
            Gout(nAccept,:) = g.';
         end
     end
+    
     info.nSlowConv = length(find(stats.SlowConv)); % carsten
     nAccept = info.nAccept;
     Tout = Tout(1:nAccept,1);
