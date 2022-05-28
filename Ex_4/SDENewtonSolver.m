@@ -13,3 +13,5 @@ while ( (norm(R,'inf') > tol) & (it <= maxit) )
     R = x -f*dt - psi;
     it = it+1;
 end
+
+end

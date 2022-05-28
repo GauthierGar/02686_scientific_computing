@@ -13,3 +13,5 @@ for k=1:N-1
     psi = X(:,k) + g*dW;
     X(:,k+1) = psi +f*dt;
 end
+
+end
