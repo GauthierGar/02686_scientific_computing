@@ -15,3 +15,4 @@ while ((k<maxit) && (norm(R,'inf')>tol))
     [f,J] = feval(funJac,t,x,varargin{:});
     R = x -dt*f-xk;
 end
+end
