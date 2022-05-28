@@ -1,11 +1,11 @@
-function [xdot,J] = CSTR1d(t,x,u,p)
+function xdot = CSTR1d(t,x,u,p)
 
-% x = T
-% u = F
+% x = Temperature
+% u = Flow
 % p = [CAin; CBin; Tin;  ....] i.e all the parameters
 
-T = x;
-F = u;
+T = x; % The temperature
+F = u; % The flow rate 
 rho = p(1);
 cp = p(2);
 k0 = p(3);
@@ -18,17 +18,13 @@ Tin = p(9); % you receive that from the parameter vector, p
 
 beta = -delHr/(rho*cp);
 
-CA = CAin+(1/beta)*(Tin-T); % Equation (21a) in ACODSpaper
-CB = CBin+(2/beta)*(Tin-T); % Equation (21b) in ACODSpaper
+CA = CAin+(1/beta)*(Tin-T); % Equation (21a) in ACODS2020
+CB = CBin+(2/beta)*(Tin-T); % Equation (21b) in ACODS2020
 
-k = k0*exp(-EaR*(1/T)); % Equation (3) ACODSpaper
-r = k*CA*CB;  % Equation (2) ACODSpaper
-RT = beta*r; % Equation (5) ACODSpaper
+k = k0*exp(-EaR*(1/T)); % Equation (3) ACODS2020
+r = k*CA*CB;  % Equation (2) ACODS2020
+RT = beta*r; % Equation (5) ACODS2020
 
-Tdot = (F/V)*(Tin - T) + RT; %
-xdot = Tdot;
-
-J= zeros(1,1);
-J(1,1)=-(F/V)-k*CB;
-
+tdot = (F/V)*(Tin - T) + RT; % Equation (20b) in ACODS2020
+xdot = tdot;
 end
