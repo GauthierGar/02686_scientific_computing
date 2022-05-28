@@ -1,5 +1,7 @@
-function [sigma] = Diffusion(t,x,varargin)
+function [g] = Diffusion(t,x,varargin)
 
-sigma = 0.2;
+g = zeros(2);
+
+g(1,1) = 1;
 
 end
