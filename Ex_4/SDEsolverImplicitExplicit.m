@@ -17,3 +17,5 @@ for k=1:N-1
     xinit   = psi + f*dt;
     [X(:,k+1),f,~] = SDENewtonSolver(ffun,T(:,k+1),dt,psi,xinit,tol,maxit,mu,varargin{:});
 end
+
+end
