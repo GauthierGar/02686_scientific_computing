@@ -7,8 +7,7 @@ nx = length(x0);
 X  = zeros(nx,N);
 
 X(:,1) = x0;
-k=1;
-    [f,J] = feval(ffun,T(k),X(:,k),mu,varargin{:});
+k=1; [f,J] = feval(ffun,T(k),X(:,k),mu,varargin{:});
 for k=1:N-1
     [g]   = feval(gfun,T(k),X(:,k),mu,varargin{:});
     dt  = T(k+1)-T(k);
